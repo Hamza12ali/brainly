@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
-
-const userSecretKey = "ThisisMyUser";
+import { userSecretKey } from "../config.js";
 
 export const auth = async (req, res, next) => {
     const token = req.headers.token;
@@ -13,9 +12,8 @@ export const auth = async (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, userSecretKey); // FIX: use jwt.verify, not token.verify
-        req.userId = decoded.userId; // Set userId in request for later use
-        next();
+        const decoded = jwt.verify(token, userSecretKey);
+        req.userId = decoded.userId;
     } catch (err) {
         return res.status(401).send({
             status: 401,
