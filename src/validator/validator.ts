@@ -11,6 +11,9 @@ const signinSchema = z.object({
     password: z.string()
 });
 
+type Login = z.infer<typeof loginSchema>;
+type Signin = z.infer<typeof signinSchema>;
+
 export const LoginValidator = async (req, res, next) => {
     const verify = loginSchema.safeParse(req.body);
     if (!verify.success) {
